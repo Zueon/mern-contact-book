@@ -26,4 +26,11 @@ contactRouter.route("/add").post((req, res) => {
   });
 });
 
+contactRouter.route("/:id").delete((req, res) => {
+  Contact.deleteOne({ _id: req.params.id }, function (err) {
+    if (err) return res.json(err);
+    res.json("OK");
+  });
+});
+
 module.exports = contactRouter;
