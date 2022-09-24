@@ -27,6 +27,9 @@ const Form = (props) => {
       phone,
     };
     add(params);
+    setName("");
+    setEmail("");
+    setPhone("");
   };
 
   return (

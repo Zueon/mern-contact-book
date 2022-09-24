@@ -33,4 +33,17 @@ contactRouter.route("/:id").delete((req, res) => {
   });
 });
 
+// update
+// A.findOneAndUpdate(conditions, update, callback) // executes
+contactRouter.route("/:id").put((req, res) => {
+  Contact.findOneAndUpdate(
+    { _id: req.params.id },
+    req.body,
+    function (err, contact) {
+      if (err) return res.json(err);
+      res.json(contact);
+    }
+  );
+});
+
 module.exports = contactRouter;

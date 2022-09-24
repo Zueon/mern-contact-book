@@ -2,19 +2,51 @@ import React, { useState } from "react";
 
 const Contact = (props) => {
   const [contact, setContact] = useState(props.contact);
-  const { onDelete } = props;
+  const [readonly, setReadonly] = useState(true);
+  const [editmode, setEditmode] = useState(false);
+  const { remove, edit } = props;
+
   const deleteHandler = () => {
-    onDelete(contact._id);
+    remove(contact._id);
   };
+
+  const onEditBtnClick = (e) => {
+    if (!readonly) edit(contact);
+    setReadonly(!readonly);
+  };
+
+  const onNameChange = (e) => {
+    setContact({ ...contact, name: e.target.value });
+  };
+  const onEmailChange = (e) => {
+    setContact({ ...contact, email: e.target.value });
+  };
+  const onPhoneChange = (e) => {
+    setContact({ ...contact, phone: e.target.value });
+  };
+
   return (
-    <div>
-      <div className="contact">
-        <span>{contact.name}</span>
-        <span>{contact.email}</span>
-        <span>{contact.phone}</span>
-        <button onClick={deleteHandler}>DELETE</button>
-        <button>EDIT</button>
-      </div>
+    <div className="contact">
+      <input
+        type="text"
+        value={contact.name}
+        readOnly={readonly}
+        onChange={onNameChange}
+      />
+      <input
+        type="text"
+        value={contact.email}
+        readOnly={readonly}
+        onChange={onEmailChange}
+      />
+      <input
+        type="text"
+        value={contact.phone}
+        readOnly={readonly}
+        onChange={onPhoneChange}
+      />
+      <button onClick={deleteHandler}>DELETE</button>
+      <button onClick={onEditBtnClick}>{readonly ? "EDIT" : "COMFIRM"}</button>
     </div>
   );
 };
